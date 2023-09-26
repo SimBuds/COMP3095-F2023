@@ -1,4 +1,5 @@
 package ca.gbc.productservice;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.MongoDBContainer;
@@ -13,7 +14,7 @@ public class AbstractContainerBaseTest {
     }
 
     @DynamicPropertySource
-    static void mongoDBProperties(DynamicPropertyRegistry registry) {
+    static void mongoDBProperties(@NotNull DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 

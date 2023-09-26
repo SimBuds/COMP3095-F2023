@@ -22,12 +22,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.UUID;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ProductServiceApplicationTests extends AbstractContainerBaseTest {
+public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,7 +48,7 @@ class ProductServiceApplicationTests extends AbstractContainerBaseTest {
                 .build();
     }
 
-    List<Product> getProductList() {
+    private List<Product> getProductList() {
         List<Product> productList = new ArrayList<>();
         UUID uuid = UUID.randomUUID();
 
@@ -75,7 +74,7 @@ class ProductServiceApplicationTests extends AbstractContainerBaseTest {
     }
 
     @Test
-    void createProducts() throws Exception {
+    public void createProducts() throws Exception {
         ProductRequest product = getProductRequest();
         String productRequestString = objectMapper.writeValueAsString(product);
 
