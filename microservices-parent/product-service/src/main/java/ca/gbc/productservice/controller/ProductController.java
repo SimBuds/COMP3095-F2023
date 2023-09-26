@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/product")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -38,7 +38,7 @@ public class ProductController {
         String updatedProductId = productService.updateProduct(productId, productRequest);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/product/" + updatedProductId);
+        headers.add("Location", "/api/product/" + updatedProductId);
 
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
