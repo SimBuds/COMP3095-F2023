@@ -15,7 +15,6 @@ public class AbstractContainerBaseTest {
     @DynamicPropertySource
     static void mongoDBProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
-
     }
 
 }
