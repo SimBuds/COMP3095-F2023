@@ -108,7 +108,7 @@ public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
 
         // Action
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/products")
+                .get("/api/product")
                 .accept(MediaType.APPLICATION_JSON));
 
         // Verify
