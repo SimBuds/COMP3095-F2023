@@ -84,7 +84,7 @@ public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
         ProductRequest productRequest = getProductRequest();
         String productRequestString = objectMapper.writeValueAsString(productRequest);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/products")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(productRequestString))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -100,7 +100,6 @@ public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
         Assertions.assertTrue(products.size() > 0);
     }
 
-    
     @Test
     void getProductById() throws Exception {
         // Setup
@@ -145,7 +144,7 @@ public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
 
         // Action
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders
-                .put("/api/products/" + savedProduct.getId()) // Fixed the URL to match the new base URL
+                .put("/api/product/" + savedProduct.getId()) // Fixed the URL to match the new base URL
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(productRequestString));
 
@@ -176,7 +175,7 @@ public class ProductServiceApplicationTests extends AbstractContainerBaseTest {
 
         // Action
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders
-                .delete("/api/products/" + savedProduct.getId())
+                .delete("/api/product/" + savedProduct.getId())
                 .contentType(MediaType.APPLICATION_JSON));
 
         // Verify
