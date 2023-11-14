@@ -24,7 +24,7 @@ COPY --from=builder /home/gradle/src/build/libs/*.jar /app/product-service.jar
 ENV MONGO_DB_USERNAME=casey \
     MONGO_DB_PASSWORD=pass
 
-# Port
+# Port for the container
 EXPOSE 8085
 
 # Entrypoint for the container
