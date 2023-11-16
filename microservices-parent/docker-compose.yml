@@ -1,6 +1,20 @@
 version: '3.8'
-# Creating a image for the product-service and it's dedicated database
+
 services:
+
+  discovery-servoice:
+    image: discovery-service
+    ports:
+      - "8761:8761"
+    build:
+        context: ./discovery-service
+        dockerfile: ./Dockerfile
+    container_name: discovery-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+        - spring
+
   inventory-service:
     image: inventory-service
     ports:
@@ -8,7 +22,7 @@ services:
     build:
       context: ./order-service
       dockerfile: ./Dockerfile
-    container_name: inventory-service-gbc
+    container_name: inventory-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
@@ -23,7 +37,7 @@ services:
     build:
       context: ./order-service
       dockerfile: ./Dockerfile
-    container_name: order-service-gbc
+    container_name: order-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
@@ -38,7 +52,7 @@ services:
     build:
       context: ./product-service
       dockerfile: ./Dockerfile
-    container_name: product-service-gbc
+    container_name: product-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
