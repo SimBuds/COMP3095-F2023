@@ -20,10 +20,6 @@ RUN mkdir /app
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /home/gradle/src/build/libs/*.jar /app/discovery-service.jar
 
-# Enviroment variables
-ENV POSTGRES_USER=admin \
-    POSTGRES_PASSWORD=password
-
 # Port for the container
 EXPOSE 8761
 
