@@ -60,35 +60,29 @@ services:
     networks:
         - spring
 
-  postgres-inventory:
-    image: postgres:latest
+  postgres:
+    image: postgres
     ports:
       - "5434:5432"
-    container_name: postgres-inventory
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/postgres/inventory-service:/data/postgres
       - ./init/postgres/inventory-service/init.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    networks:
-      - spring
+    container_name: postgres-inventory
 
-  postgres:
-    image: postgres:latest
+  postgres-order:
+    image: postgres
     ports:
       - "5433:5432"
-    container_name: postgres-order
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/postgres/order-service:/data/postgres
       - ./init/postgres/order-service/init.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    networks:
-      - spring
+    container_name: postgres-order
 
   pgadmin:
     image: dpage/pgadmin4
@@ -97,10 +91,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user@domain.ca
       PGADMIN_DEFAULT_PASSWORD: password
-    container_name: pgadmin-gbc
+    container_name: pgadmin-local
     restart: unless-stopped
-    networks:
-      - spring
 
   mongodb:
     image: mongo:latest
