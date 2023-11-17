@@ -7,13 +7,13 @@ services:
     ports:
       - "8761:8761"
     build:
-        context: ./discovery-service
-        dockerfile: ./Dockerfile
+      context: ./discovery-service
+      dockerfile: ./Dockerfile
     container_name: discovery-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:
-        - spring
+      - spring
 
   inventory-service:
     image: inventory-service
@@ -41,7 +41,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
-      - postgres
+      - postgres-order
     networks:
       - spring
 
@@ -60,19 +60,7 @@ services:
     networks:
         - spring
 
-  postgres:
-    image: postgres
-    ports:
-      - "5434:5432"
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-    volumes:
-      - ./data/postgres/inventory-service:/data/postgres
-      - ./init/postgres/inventory-service/init.sql:/docker-entrypoint-initdb.d/init.sql
-    container_name: postgres-inventory
-
-  postgres-order:
+  postgres-inventory:
     image: postgres
     ports:
       - "5433:5432"
@@ -80,9 +68,25 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     volumes:
+      - ./data/postgres/inventory-service:/data/postgres
+      - ./init/postgres/inventory-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: postgres-inventory
+    networks:
+      - spring
+
+  postgres-order:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
       - ./data/postgres/order-service:/data/postgres
       - ./init/postgres/order-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     container_name: postgres-order
+    networks:
+      - spring
 
   pgadmin:
     image: dpage/pgadmin4
@@ -91,7 +95,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user@domain.ca
       PGADMIN_DEFAULT_PASSWORD: password
-    container_name: pgadmin-local
+    networks:
+      - spring
+    container_name: pgadmin
     restart: unless-stopped
 
   mongodb:
