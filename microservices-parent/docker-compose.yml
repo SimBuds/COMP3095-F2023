@@ -2,18 +2,18 @@ version: '3.8'
 
 services:
 
-  discovery-servoice:
+  discovery-service:
     image: discovery-service
     ports:
       - "8761:8761"
     build:
-        context: ./discovery-service
-        dockerfile: ./Dockerfile
+      context: ./discovery-service
+      dockerfile: ./Dockerfile
     container_name: discovery-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
     networks:
-        - spring
+      - spring
 
   inventory-service:
     image: inventory-service
@@ -41,7 +41,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
-      - postgres
+      - postgres-order
     networks:
       - spring
 
@@ -61,32 +61,30 @@ services:
         - spring
 
   postgres-inventory:
-    image: postgres:latest
+    image: postgres
     ports:
-      - "5434:5432"
-    container_name: postgres-inventory
+      - "5433:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/postgres/inventory-service:/data/postgres
       - ./init/postgres/inventory-service/init.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
+    container_name: postgres-inventory
     networks:
       - spring
 
-  postgres:
-    image: postgres:latest
+  postgres-order:
+    image: postgres
     ports:
-      - "5433:5432"
-    container_name: postgres-order
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     volumes:
       - ./data/postgres/order-service:/data/postgres
       - ./init/postgres/order-service/init.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
+    container_name: postgres-order
     networks:
       - spring
 
@@ -97,10 +95,10 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user@domain.ca
       PGADMIN_DEFAULT_PASSWORD: password
-    container_name: pgadmin-gbc
-    restart: unless-stopped
     networks:
       - spring
+    container_name: pgadmin
+    restart: unless-stopped
 
   mongodb:
     image: mongo:latest
