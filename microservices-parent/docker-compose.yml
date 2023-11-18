@@ -20,7 +20,7 @@ services:
     ports:
       - "8083:8083"
     build:
-      context: ./order-service
+      context: ./inventory-service
       dockerfile: ./Dockerfile
     container_name: inventory-service
     environment:
