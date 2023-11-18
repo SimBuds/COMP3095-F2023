@@ -46,7 +46,7 @@ services:
       - spring
 
   product-service:
-    image: product-service
+    image: product-service:2.0
     ports:
       - "8084:8084"
     build:
