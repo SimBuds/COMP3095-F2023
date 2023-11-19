@@ -14,6 +14,21 @@ services:
     networks:
       - spring
 
+  api-gateway:
+    image: api-gateway
+    ports:
+      - "8181:8181"
+    build:
+      context: ./api-gateway
+      dockerfile: ./Dockerfile
+    container_name: api-gateway
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - discovery-service
+    networks:
+      - spring
+
   inventory-service:
     image: inventory-service
     ports:
@@ -58,19 +73,6 @@ services:
         - mongodb
     networks:
         - spring
-
-  api-gateway:
-    image: api-gateway
-    ports:
-      - "8085:8085"
-    build:
-      context: ./api-gateway
-      dockerfile: ./Dockerfile
-    container_name: api-gateway
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    networks:
-      - spring
 
   postgres-inventory:
     image: postgres
