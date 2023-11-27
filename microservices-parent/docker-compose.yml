@@ -30,6 +30,36 @@ services:
     networks:
       - spring
 
+  postgres-keycloak:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keycloak
+    volumes:
+      - ./data/postgres/order-service:/var/lib/postgresql/data
+    container_name: postgres-keycloak
+
+  keycloak:
+    image: jboss/keycloak
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    container_name: keycloak
+    depends_on:
+      - postgres-keycloak
+
   inventory-service:
     image: inventory-service
     ports:
