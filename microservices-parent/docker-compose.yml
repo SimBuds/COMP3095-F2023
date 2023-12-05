@@ -39,6 +39,7 @@ services:
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
     depends_on:
       - discovery-service
+    restart: unless-stopped
     networks:
       - spring
 
@@ -140,6 +141,8 @@ services:
     volumes:
       - ./data/postgres/order-service:/var/lib/postgresql/data
     container_name: postgres-keycloak
+    networks:
+      - spring
 
   pgadmin:
     image: dpage/pgadmin4
@@ -183,6 +186,13 @@ services:
       - spring
     depends_on:
       - mongodb
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    restart: unless-stopped
+    ports:
+      - "9411:9411"
+    container_name: zipkin-local
 
 networks:
   spring:

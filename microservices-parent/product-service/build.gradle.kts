@@ -34,6 +34,9 @@ dependencies {
 	implementation ("org.testcontainers:mockserver:1.18.1")
 	testImplementation ("org.testcontainers:mongodb:1.18.1")
 	implementation ("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server:4.0.3")
+	implementation("io.micrometer:micrometer-observation:1.11.4")
+	implementation("io.micrometer:micrometer-tracing-bridge-brave:1.1.4")
+	implementation("io.zipkin.reporter2:zipkin-reporter-brave:2.16.4")
 }
 
 tasks.withType<Test> {
