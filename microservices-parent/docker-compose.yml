@@ -17,6 +17,8 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
       KEYCLOAK_IMPORT: /opt/jboss/keycloak/realms/spring-boot-microservices-realm.json
+      KEYCLOAK_LOGLEVEL: DEBUG
+      JWT_ISSUER_URI: http://keycloak:8080/auth/realms/spring-boot-microservices-realm
     volumes:
       - ./realms:/opt/jboss/keycloak/realms
     container_name: keycloak
@@ -38,6 +40,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
       eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+
     depends_on:
       - discovery-service
     restart: unless-stopped
@@ -140,7 +143,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: keycloak
     volumes:
-      - ./data/postgres/order-service:/var/lib/postgresql/data
+      - ./data/postgres/keycloak:/var/lib/postgresql/data
     container_name: postgres-keycloak
     networks:
       - spring
