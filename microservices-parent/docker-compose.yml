@@ -7,6 +7,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      SPRING_PROFILES_ACTIVE: docker
       JBOSS_LOG_MANAGER_ROOT_LOGGER: DEBUG
       DB_VENDOR: postgres
       DB_ADDR: postgres-keycloak
@@ -193,6 +194,8 @@ services:
     ports:
       - "9411:9411"
     container_name: zipkin-local
+    networks:
+      - spring
 
 networks:
   spring:
